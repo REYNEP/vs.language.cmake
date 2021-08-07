@@ -112,8 +112,12 @@
 		</dict>	
 			
 		<dict>
-			<key>match</key>
-			<string>#+.*$</string>
+			<key>comment</key>
+			<string>[EquivalentMATCHRegex]: #+.*$    [P.S. if smth is Given scope using MATCH, in vsCode (2021-AUG) another MATCHRegex won't add any scope to it]</string>
+			<key>begin</key>
+			<string>#</string>
+			<key>end</key>
+			<string>\n</string>
 			<key>name</key>
 			<string>comment.source.cmake</string>
 		</dict>
