@@ -1,6 +1,19 @@
-# CMake For VisualStudio Code
-### [if you dont wanna build] Install ***CMake by twxs*** in vscode... Swap-out the `package.json` & `syntaxes` folder from here
+<h1 align="center">REYNEP-DOCS</h1>
+<div align="center">
 
+> [if you dont wanna build] Install ***CMake by twxs*** in vscode... Swap-out the `package.json` & `syntaxes` folder from here </br>
+> Or you can download the RELEASED ***ReynepModv0.1Beta*** & copy-paste that to your *vscode extensions folder.* </br>
+> if the Release is behind the latest commits, Swap-out the `package.json` & `syntaxes` folder after cloning
+
+</div>
+</br>
+<div align="right">
+
+###### _TWXS stuffs below_
+
+</div>
+
+# CMake For VisualStudio Code
 [![Join the chat at https://gitter.im/twxs/vs.language.cmake](https://badges.gitter.im/twxs/vs.language.cmake.svg)](https://gitter.im/twxs/vs.language.cmake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This extension provides support for [CMake](http://www.cmake.org/) in [Visual Studio Code](https://code.visualstudio.com/).
