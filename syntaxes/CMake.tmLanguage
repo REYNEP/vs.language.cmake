@@ -15,6 +15,7 @@
 		<!-- ======================= -->
 		<!--       REYNEP MODS       -->
 		<!-- ======================= -->
+		<!-- https://macromates.com/manual/en/regular_expressions -->
 		<dict>
 			<key>include</key>
 			<string>#mods-REYNEP</string>
@@ -55,6 +56,14 @@
 				<dict>
 					<key>include</key>
 					<string>#message-REYNEP</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#find_stuff-REYNEP</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#file-REYNEP</string>
 				</dict>
 			</array>
 		</dict>
@@ -298,6 +307,19 @@
 					<key>name</key>
 					<string>option.command.cmake</string>
 				</dict>
+				<dict>
+					<!-- (?<=[\(]\s*)      : expands to this -->
+					<!-- \s means whitespace, * means 0 or more times of, '?<=' means look backwards, for '\(' = bracket -->
+					<!-- (Variable         : what we initially tried to sup. -->
+					<!-- (<gap>Variable    : gap can be multiple whitespace but not newline.... -->
+					<!--                   : newline can't really be done in VSCODE without using 'begin/end' that captures NEWLINE -->
+					<!--                   : https://stackoverflow.com/a/69337750 -->
+					<!-- \b[\w]*\b   : WORD -->
+					<key>match</key>
+					<string>(?<=[\(]\s*)\b[\w]*\b</string>
+					<key>name</key>
+					<string>storage.source.cmake storage.set.cmake</string>
+				</dict>
 			</array>
 		</dict>
 
@@ -333,17 +355,185 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>match</key>
+					<string>\b(?i:FATAL_ERROR|SEND_ERROR|AUTHOR_WARNING|DEPRECATION|NOTICE|STATUS|VERBOSE|DEBUG|TRACE)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake, message.type.cmake</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#base_and_og_stuffs_by_twxs</string>
+				</dict>
+			</array>
+		</dict>
+
+		<key>find_stuff-REYNEP</key>
+		<!-- ======================= -->
+		<!--      find_library()     -->
+		<!-- ======================= -->
+		<dict>
+			<key>comment</key>
+			<string>[REYNEP] Find stuffs </string>
+			<key>begin</key>
+			<string>[\s]*find_library[\s]*\(</string>
+			<key>end</key>
+			<string>\)</string>
+			
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>command.cmake.find_stuff</string>
+				</dict>
+			</dict>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>command.cmake.find_stuff</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict>
 					<key>include</key>
 					<string>#base_and_og_stuffs_by_twxs</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(?i:FATAL_ERROR|SEND_ERROR|AUTHOR_WARNING|DEPRECATION|NOTICE|STATUS|VERBOSE|DEBUG|TRACE)\b</string>
+					<string>\b(?i:NAMES|HINTS|PATHS|PATH_SUFFIXES|DOC)\b</string>
 					<key>name</key>
-					<string>message.type.cmake</string>
+					<string>param.command.cmake</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:NO_DEFAULT_PATH|NO_CMAKE_ENVIRONMENT_PATH|NO_CMAKE_PATH|NO_SYSTEM_ENVIRONMENT_PATH|NO_CMAKE_SYSTEM_PATH|CMAKE_FIND_ROOT_PATH_BOTH|ONLY_CMAKE_FIND_ROOT_PATH|NO_CMAKE_FIND_ROOT_PATH|NO_CACHE|REQUIRED)\b</string>
+					<key>name</key>
+					<string>param.command.cmake option.command.cmake</string>
 				</dict>
 			</array>
 		</dict>
+
+		<!-- find_package TODO -->
+
+
+		<key>file-REYNEP</key>
+		<!-- ======================= -->
+		<!--          file()         -->
+		<!-- ======================= -->
+		<!-- TODO: Cryptographic Hash support \see file(<HASH> <filename> <out-var>) -->
+		<dict>
+			<key>comment</key>
+			<string>[REYNEP] File </string>
+			<key>begin</key>
+			<string>[\s]*file[\s]*\(</string>
+			<key>end</key>
+			<string>\)</string>
+			
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>command.cmake.file</string>
+				</dict>
+			</dict>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>command.cmake.file</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#base_and_og_stuffs_by_twxs</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:READ|STRINGS|TIMESTAMP|GET_RUNTIME_DEPENDENCIES)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.reading</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:WRITE|APPEND|TOUCH|TOUCH_NOCREATE|GENERATE|CONFIGURE)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.writing</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:GLOB|GLOB_RECURSE|MAKE_DIRECTORY|REMOVE|REMOVE_RECURSE|RENAME|COPY_FILE|COPY|INSTALL|SIZE|READ_SYMLINK|CREATE_LINK|CHMOD|CHMOD_RECURSE)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.filesystem</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:REAL_PATH|RELATIVE_PATH|TO_CMAKE_PATH|TO_NATIVE_PATH)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.path subcommand.command.cmake.file.pathconversion</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:DOWNLOAD|UPLOAD)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.transfer</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:LOCK|FUCK)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.locking</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(?i:ARCHIVE_CREATE|ARCHIVE_EXTRACT)\b</string>
+					<key>name</key>
+					<string>subcommand.command.cmake.file.archiving</string>
+				</dict>
+			</array>
+		</dict>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -367,9 +557,25 @@
 					<key>comment</key>
 					<string>[REYNEP] Keyword Control</string>
 					<key>match</key>
-					<string>^\s*\b(?i:if|else|elseif|endif|function|endfunction|macro|macro|foreach|endforeach|while|endwhile|break|continue)\b</string>
+					<string>^\s*\b(?i:if|else|elseif|endif|function|endfunction|macro|endmacro|foreach|endforeach|while|endwhile|break|continue)\b</string>
 					<key>name</key>
 					<string>keyword.control.cmake</string>
+				</dict>
+				<dict>
+					<key>comment</key>
+					<string>[REYNEP] Variables for Languages [INPUT/CONSTANT]</string>
+					<key>match</key>
+					<string>\b(?i:CMAKE_CXX_COMPILER_ID)\b</string>
+					<key>name</key>
+					<string>variable.source.cmake, variable.constant.cmake</string>
+				</dict>
+				<dict>
+					<key>comment</key>
+					<string>[REYNEP] Variables for Languages </string>
+					<key>match</key>
+					<string>\b(?i:CMAKE_CXX_STANDARD|CMAKE_CXX_STANDARD_REQUIRED)\b</string>
+					<key>name</key>
+					<string>variable.source.cmake</string>
 				</dict>
 
 
@@ -592,7 +798,7 @@
 				
 				<dict>
 					<key>comment</key>
-					<string>Derecated keyword</string>
+					<string>Deprecated keyword</string>
 					<key>match</key>
 					<string>\b(?i:ABSTRACT_FILES|BUILD_NAME|SOURCE_FILES|SOURCE_FILES_REMOVE|VTK_MAKE_INSTANTIATOR|VTK_WRAP_JAVA|VTK_WRAP_PYTHON|VTK_WRAP_TCL|WRAP_EXCLUDE_FILES)\b</string>
 					<key>name</key>

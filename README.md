@@ -1,4 +1,5 @@
 # CMake For VisualStudio Code
+### [if you dont wanna build] Install ***CMake by twxs*** in vscode... Swap-out the `package.json` & `syntaxes` folder from here
 
 [![Join the chat at https://gitter.im/twxs/vs.language.cmake](https://badges.gitter.im/twxs/vs.language.cmake.svg)](https://gitter.im/twxs/vs.language.cmake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

@@ -1,0 +1,25 @@
+{
+    "scopeName": "NonASCII.injection.cpp",
+  
+    "fileType": ["cmake", "cpp"],
+
+    "injectionSelector": [
+      "L:comment.line.double-slash.cpp",
+      "L:comment.block.documentation.cpp",
+      "L:comment.source.cmake",
+      "L:source"
+    ],
+  
+    "patterns": [
+      {
+        "include": ["#Non-ASCII-Chars"]
+      }
+    ],
+
+    "repository": {
+      "Non-ASCII-Chars": {
+        "match": "\\p{^ASCII}",
+        "name": "comment.non-ascii"
+      }
+    }
+}

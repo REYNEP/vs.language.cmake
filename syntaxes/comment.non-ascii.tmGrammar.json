@@ -1,0 +1,21 @@
+{
+  "scopeName": "comment.non-ascii",
+
+  "injectionSelector": [
+    "L:comment",
+    "L:source.comment"
+  ],
+
+  "patterns": [
+    {
+      "include": "#cmake-non-ascii"
+    }
+  ],
+
+  "repository": {
+    "cmake-non-ascii": {
+      "match": "\\p{^ASCII}+",
+      "name": "comment.non-ascii"
+    }
+  }
+}
